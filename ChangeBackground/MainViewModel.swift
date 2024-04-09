@@ -8,57 +8,53 @@
 import UIKit
 import Vision
 import CoreML
+import Combine
 
 class MainViewModel {
     @Published var selectedImage: UIImage?
     @Published var isImagePickerDisplayed: Bool = false
     @Published var foregroundImage: UIImage?
-
+    
+    
+    var undoForegroundImageStack = MostRecentArray<UIImage>(maxSize: 10)
     var imageDidChange: ((UIImage?) -> Void)?
     var shareImage: ((UIImage?) -> Void)?
+
+    private var imageProcessor: ImageProcessor
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(imageProcessor: ImageProcessor = ImageProcessor()) {
+        self.imageProcessor = imageProcessor
+    }
 
     func subjectImageSelected(_ image: UIImage?) {
         foregroundImage = image
         
-        if let cgImage = image?.cgImage, let filteredImage =  getForegroundMaskedImage(cgImage: cgImage) {
-                foregroundImage = UIImage(cgImage: filteredImage)
-                return
+        if let cgImage = image?.cgImage {
+            imageProcessor.getForegroundMaskedImage(cgImage: cgImage, completion: { [weak self] foregroundCGImage in
+                guard let foregroundCGImage, let self  else {
+                    return
+                }
+                let uiImage = UIImage(cgImage: foregroundCGImage)
+                self.foregroundImage = uiImage
+                foregroundImageDidChange(uiImage)
+            })
         }
     }
-
-    func getForegroundMaskedImage(cgImage: CGImage) -> (CGImage?) {
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-        let segmentationRequest = VNGenerateForegroundInstanceMaskRequest()
-
-        do {
-            try requestHandler.perform([segmentationRequest])
-        } catch {
-            print(error)
-            return nil
-        }
-
-        guard let result = segmentationRequest.results?.first else {
-            print("result is empty", segmentationRequest.results ?? "nil")
-            return nil
-        }
-        
-        var pixelBuffer: CVPixelBuffer
-        do {
-            try pixelBuffer = result.generateMaskedImage(ofInstances: result.allInstances, from: requestHandler, croppedToInstancesExtent: true)
-        }
-        catch {
-            print("generateMaskedImage failed")
-            return nil
-        }
-
-        let ciContext = CIContext()
-        let mask = CIImage(cvPixelBuffer: pixelBuffer)
-        guard let maskCGImage = ciContext.createCGImage(mask, from: mask.extent) else {
-            print("maskCGImage failed")
-            return nil
-        }
-        return maskCGImage
+    
+    func foregroundImageDidChange(_ newImage: UIImage) {
+        self.foregroundImage = newImage
+        self.undoForegroundImageStack.add(newImage)
     }
+    
+    func undoForegroundImageEdit() {
+        guard undoForegroundImageStack.count() > 1 else {
+            return
+        }
+        self.undoForegroundImageStack.remove()
+        self.foregroundImage = self.undoForegroundImageStack.last()
+    }
+    
 }
 
 
@@ -68,6 +64,7 @@ extension MainViewModel {
             shareImage(imageToShare)
         }
     }
+    
     func createCompositeImage(from commonSuperview: UIView) -> UIImage? {
         guard self.containsImageViews(in: commonSuperview) else {
             print("Image views must be in the same view hierarchy")
@@ -97,4 +94,5 @@ extension MainViewModel {
         }
         return false
     }
+    
 }
