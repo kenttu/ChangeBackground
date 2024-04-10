@@ -50,12 +50,12 @@ class MainViewController: UIViewController {
     
     @IBAction func backgroundButtonPressed() {
         self.selectControlViews(.backgroundControlView)
-        showImagePicker()
+//        showImagePicker()
     }
     
     @IBAction func subjectButtonPressed() {
         self.selectControlViews(.subjectControlView)
-        showImagePicker()
+//        showImagePicker()
     }
         
     @IBAction func shareButtonTapped(_ sender: UIButton) {

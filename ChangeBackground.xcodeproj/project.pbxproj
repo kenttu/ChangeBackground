@@ -24,7 +24,7 @@
 		385EC83C2BBB890900922423 /* MaskingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EC83B2BBB890900922423 /* MaskingView.swift */; };
 		38D7E9762BC07D64004990E3 /* UIImageView+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */; };
 		38D7E9772BC07D64004990E3 /* UIImage+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */; };
-		38D7E97B2BC080E3004990E3 /* VerticalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E97A2BC080E3004990E3 /* VerticalButton.swift */; };
+		38D7E97B2BC080E3004990E3 /* CustomTintedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */; };
 		38D7E97F2BC0D572004990E3 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E97E2BC0D572004990E3 /* ImageProcessor.swift */; };
 		38D7E9812BC27479004990E3 /* BackgroundImagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9802BC27479004990E3 /* BackgroundImagesDataSource.swift */; };
 		38D7E9832BC45910004990E3 /* MostRecentArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9822BC45910004990E3 /* MostRecentArray.swift */; };
@@ -69,7 +69,7 @@
 		385EC83B2BBB890900922423 /* MaskingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskingView.swift; sourceTree = "<group>"; };
 		38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utility.swift"; sourceTree = "<group>"; };
 		38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Utility.swift"; sourceTree = "<group>"; };
-		38D7E97A2BC080E3004990E3 /* VerticalButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalButton.swift; sourceTree = "<group>"; };
+		38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTintedButton.swift; sourceTree = "<group>"; };
 		38D7E97E2BC0D572004990E3 /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		38D7E9802BC27479004990E3 /* BackgroundImagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImagesDataSource.swift; sourceTree = "<group>"; };
 		38D7E9822BC45910004990E3 /* MostRecentArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentArray.swift; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 			children = (
 				38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */,
 				38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */,
-				38D7E97A2BC080E3004990E3 /* VerticalButton.swift */,
+				38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */,
 				38D7E9822BC45910004990E3 /* MostRecentArray.swift */,
 			);
 			path = Extensions;
@@ -334,7 +334,7 @@
 				384462F32BAA3EA0000C9DB1 /* CheckerboardView.swift in Sources */,
 				38D7E97F2BC0D572004990E3 /* ImageProcessor.swift in Sources */,
 				385EC8372BB4E79E00922423 /* BackgroundCollectionViewCell.swift in Sources */,
-				38D7E97B2BC080E3004990E3 /* VerticalButton.swift in Sources */,
+				38D7E97B2BC080E3004990E3 /* CustomTintedButton.swift in Sources */,
 				385EC83C2BBB890900922423 /* MaskingView.swift in Sources */,
 				38D7E9772BC07D64004990E3 /* UIImage+Utility.swift in Sources */,
 				38224AEC2BA4F6B4008D1D32 /* AppDelegate.swift in Sources */,
