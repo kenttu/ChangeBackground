@@ -16,21 +16,21 @@ class MainViewController: UIViewController {
     @IBOutlet var backgroundButton: UIButton!
     @IBOutlet var subjectButton: UIButton!
     @IBOutlet var backgroundCollectionView: UICollectionView!
+    @IBOutlet var backgroundControlView: UIView!
+    @IBOutlet var subjectControlView: UIView!
     
-    private var isBackgroundButtonPressed = false
     private var eraseMaskView: MaskingView?
     private var viewModel = MainViewModel()
     private var cancellable: Set<AnyCancellable> = []
     private var backgroundImagesDataSource: BackgroundImagesDataSource?
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupControlViews()
         observeViewModel()
         setupBackgroundCollectionView()
+        
     }
     
     private func observeViewModel() {
@@ -49,12 +49,12 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func backgroundButtonPressed() {
-        isBackgroundButtonPressed = true
+        self.selectControlViews(.backgroundControlView)
         showImagePicker()
     }
     
     @IBAction func subjectButtonPressed() {
-        isBackgroundButtonPressed = false
+        self.selectControlViews(.subjectControlView)
         showImagePicker()
     }
         
@@ -78,10 +78,32 @@ class MainViewController: UIViewController {
     @IBAction func undoEditSubjectImage(_ sender: UIButton) {
         viewModel.undoForegroundImageEdit()
     }
-    
-    
 }
 
+extension MainViewController {
+    enum ControlViews {
+        case backgroundControlView
+        case subjectControlView
+    }
+    
+    func selectControlViews(_ controlView: ControlViews) {
+        switch controlView {
+        case .backgroundControlView:
+            backgroundButton.isSelected = true
+            subjectButton.isSelected = false
+        case .subjectControlView:
+            subjectButton.isSelected = true
+            backgroundButton.isSelected = false
+        }
+        
+        backgroundControlView.isHidden = !backgroundButton.isSelected
+        subjectControlView.isHidden = !subjectButton.isSelected
+    }
+    
+    func setupControlViews() {
+        self.selectControlViews(.backgroundControlView)
+    }
+}
 extension MainViewController {
     func setupBackgroundCollectionView() {
         backgroundImagesDataSource = BackgroundImagesDataSource(imageView: self.backgroundImageView)
@@ -111,13 +133,12 @@ extension MainViewController: UIImagePickerControllerDelegate & UINavigationCont
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
-        if isBackgroundButtonPressed {
+        if backgroundButton.isSelected {
             backgroundImageView.image = selectedImage
         }
         else {
             viewModel.subjectImageSelected(selectedImage)
         }
-        
         picker.dismiss(animated: true)
     }
 
