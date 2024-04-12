@@ -22,11 +22,8 @@ struct MostRecentArray<T> {
         storage.append(newElement)
     }
     
-    mutating func remove() {
-        guard storage.isEmpty == false else {
-            return
-        }
-        storage.removeLast()
+    mutating func removeLast() -> T {
+        return storage.removeLast()
     }
     
     func last() -> T? {
@@ -35,5 +32,9 @@ struct MostRecentArray<T> {
     
     func count() -> Int {
         return storage.count
+    }
+    
+    func isEmpty() -> Bool {
+        return storage.isEmpty
     }
 }

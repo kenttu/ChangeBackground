@@ -18,6 +18,7 @@ class MainViewController: UIViewController {
     @IBOutlet var backgroundCollectionView: UICollectionView!
     @IBOutlet var backgroundControlView: UIView!
     @IBOutlet var subjectControlView: UIView!
+    @IBOutlet var undoEditButton: UIButton!
     
     private var eraseMaskView: MaskingView?
     private var viewModel = MainViewModel()
@@ -26,18 +27,19 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupControlViews()
         observeViewModel()
         setupBackgroundCollectionView()
-        
     }
     
     private func observeViewModel() {
         viewModel.$foregroundImage
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
-                self?.subjectImageView.image = image
+                if let image {
+                    self?.subjectImageView.isHidden = false
+                    self?.subjectImageView.image = image
+                }
             }
             .store(in: &cancellable)
         
@@ -50,12 +52,15 @@ class MainViewController: UIViewController {
     
     @IBAction func backgroundButtonPressed() {
         self.selectControlViews(.backgroundControlView)
-//        showImagePicker()
+        showImagePicker()
     }
     
     @IBAction func subjectButtonPressed() {
         self.selectControlViews(.subjectControlView)
-//        showImagePicker()
+        guard let _ = viewModel.foregroundImage else {
+            showImagePicker()
+            return
+        }
     }
         
     @IBAction func shareButtonTapped(_ sender: UIButton) {
@@ -102,15 +107,17 @@ extension MainViewController {
     
     func setupControlViews() {
         self.selectControlViews(.backgroundControlView)
+        self.subjectImageView.isHidden = true
+        self.subjectImageView.contentMode = .scaleAspectFit
+        self.backgroundImageView.contentMode = .scaleToFill
     }
 }
+
 extension MainViewController {
     func setupBackgroundCollectionView() {
         backgroundImagesDataSource = BackgroundImagesDataSource(imageView: self.backgroundImageView)
         backgroundCollectionView.dataSource = backgroundImagesDataSource
         backgroundCollectionView.delegate = backgroundImagesDataSource
-        backgroundCollectionView.backgroundColor = .clear
-        backgroundCollectionView.register(UINib(nibName: "BackgroundCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "BackgroundCollectionViewCell")
         
         if let layout = backgroundCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
@@ -124,11 +131,14 @@ extension MainViewController: UIImagePickerControllerDelegate & UINavigationCont
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             return
         }
-
+        
+        LoadingIndicator.shared.show(over: self.view)
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
-        self.present(imagePicker, animated: true)
+        self.present(imagePicker, animated: true) {
+            LoadingIndicator.shared.hide()
+        }
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -171,11 +181,13 @@ extension MainViewController {
             self.viewModel.foregroundImageDidChange(newImage)
         }
         backgroundImageView.isHidden = true
+        undoEditButton.isHidden = false
         subjectImageView.addSubview(eraseMaskView)
     }
 
     private func disableEraseMaskView() {
         backgroundImageView.isHidden = false
+        undoEditButton.isHidden = true
         eraseMaskView?.removeFromSuperview()
         eraseMaskView = nil
     }

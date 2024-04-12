@@ -19,9 +19,9 @@
 		38224B1C2BA4F7EE008D1D32 /* DraggableZoomableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38224B1B2BA4F7EE008D1D32 /* DraggableZoomableImageView.swift */; };
 		38224B452BA51E12008D1D32 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38224B442BA51E12008D1D32 /* MainViewModel.swift */; };
 		384462F32BAA3EA0000C9DB1 /* CheckerboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384462F22BAA3EA0000C9DB1 /* CheckerboardView.swift */; };
-		385EC8352BB4E67E00922423 /* BackgroundCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 385EC8342BB4E67E00922423 /* BackgroundCollectionViewCell.xib */; };
 		385EC8372BB4E79E00922423 /* BackgroundCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EC8362BB4E79E00922423 /* BackgroundCollectionViewCell.swift */; };
 		385EC83C2BBB890900922423 /* MaskingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EC83B2BBB890900922423 /* MaskingView.swift */; };
+		389D48982BC862EE00AE81D2 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D48972BC862EE00AE81D2 /* LoadingIndicator.swift */; };
 		38D7E9762BC07D64004990E3 /* UIImageView+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */; };
 		38D7E9772BC07D64004990E3 /* UIImage+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */; };
 		38D7E97B2BC080E3004990E3 /* CustomTintedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */; };
@@ -64,9 +64,9 @@
 		38224B1B2BA4F7EE008D1D32 /* DraggableZoomableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableZoomableImageView.swift; sourceTree = "<group>"; };
 		38224B442BA51E12008D1D32 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		384462F22BAA3EA0000C9DB1 /* CheckerboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerboardView.swift; sourceTree = "<group>"; };
-		385EC8342BB4E67E00922423 /* BackgroundCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BackgroundCollectionViewCell.xib; sourceTree = "<group>"; };
 		385EC8362BB4E79E00922423 /* BackgroundCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCollectionViewCell.swift; sourceTree = "<group>"; };
 		385EC83B2BBB890900922423 /* MaskingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskingView.swift; sourceTree = "<group>"; };
+		389D48972BC862EE00AE81D2 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utility.swift"; sourceTree = "<group>"; };
 		38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Utility.swift"; sourceTree = "<group>"; };
 		38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTintedButton.swift; sourceTree = "<group>"; };
@@ -169,7 +169,6 @@
 		385EC8382BB5312C00922423 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				385EC8342BB4E67E00922423 /* BackgroundCollectionViewCell.xib */,
 				385EC8362BB4E79E00922423 /* BackgroundCollectionViewCell.swift */,
 				384462F22BAA3EA0000C9DB1 /* CheckerboardView.swift */,
 				38224B1B2BA4F7EE008D1D32 /* DraggableZoomableImageView.swift */,
@@ -191,6 +190,7 @@
 			children = (
 				38D7E97E2BC0D572004990E3 /* ImageProcessor.swift */,
 				38D7E9802BC27479004990E3 /* BackgroundImagesDataSource.swift */,
+				389D48972BC862EE00AE81D2 /* LoadingIndicator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -300,7 +300,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				38224AF82BA4F6B5008D1D32 /* LaunchScreen.storyboard in Resources */,
-				385EC8352BB4E67E00922423 /* BackgroundCollectionViewCell.xib in Resources */,
 				38224AF52BA4F6B5008D1D32 /* Assets.xcassets in Resources */,
 				38224AF32BA4F6B4008D1D32 /* Main.storyboard in Resources */,
 			);
@@ -339,6 +338,7 @@
 				38D7E9772BC07D64004990E3 /* UIImage+Utility.swift in Sources */,
 				38224AEC2BA4F6B4008D1D32 /* AppDelegate.swift in Sources */,
 				38224AEE2BA4F6B4008D1D32 /* SceneDelegate.swift in Sources */,
+				389D48982BC862EE00AE81D2 /* LoadingIndicator.swift in Sources */,
 				38D7E9832BC45910004990E3 /* MostRecentArray.swift in Sources */,
 				38D7E9762BC07D64004990E3 /* UIImageView+Utility.swift in Sources */,
 			);

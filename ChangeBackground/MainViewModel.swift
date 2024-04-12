@@ -51,10 +51,9 @@ class MainViewModel {
         guard undoForegroundImageStack.count() > 1 else {
             return
         }
-        self.undoForegroundImageStack.remove()
+        _ = self.undoForegroundImageStack.removeLast()
         self.foregroundImage = self.undoForegroundImageStack.last()
     }
-    
 }
 
 
@@ -94,5 +93,4 @@ extension MainViewModel {
         }
         return false
     }
-    
 }

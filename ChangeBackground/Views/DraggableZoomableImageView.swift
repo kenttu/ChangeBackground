@@ -29,14 +29,13 @@ class DraggableZoomableImageView: UIImageView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
-        
     }
     
     
     private func commonInit() {
         self.isUserInteractionEnabled = true
-        self.contentMode = .scaleAspectFit
-        self.backgroundColor = .clear  
+        self.contentMode = .scaleAspectFill
+        self.backgroundColor = .clear
 
         addGestureRecognizers()
         
