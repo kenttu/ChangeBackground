@@ -22,6 +22,11 @@
 		385EC8372BB4E79E00922423 /* BackgroundCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EC8362BB4E79E00922423 /* BackgroundCollectionViewCell.swift */; };
 		385EC83C2BBB890900922423 /* MaskingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EC83B2BBB890900922423 /* MaskingView.swift */; };
 		389D48982BC862EE00AE81D2 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D48972BC862EE00AE81D2 /* LoadingIndicator.swift */; };
+		389D489A2BC9A26C00AE81D2 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D48992BC9A26C00AE81D2 /* EditViewController.swift */; };
+		389D489C2BCA527A00AE81D2 /* EditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D489B2BCA527A00AE81D2 /* EditViewModel.swift */; };
+		389D489E2BCB059800AE81D2 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D489D2BCB059800AE81D2 /* UIViewController+Extensions.swift */; };
+		389D48A02BCB805B00AE81D2 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D489F2BCB805B00AE81D2 /* Math.swift */; };
+		38D590332BCB941A0004F33B /* CustomRotationGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D590322BCB941A0004F33B /* CustomRotationGestureRecognizer.swift */; };
 		38D7E9762BC07D64004990E3 /* UIImageView+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */; };
 		38D7E9772BC07D64004990E3 /* UIImage+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */; };
 		38D7E97B2BC080E3004990E3 /* CustomTintedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */; };
@@ -67,6 +72,11 @@
 		385EC8362BB4E79E00922423 /* BackgroundCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundCollectionViewCell.swift; sourceTree = "<group>"; };
 		385EC83B2BBB890900922423 /* MaskingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaskingView.swift; sourceTree = "<group>"; };
 		389D48972BC862EE00AE81D2 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		389D48992BC9A26C00AE81D2 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		389D489B2BCA527A00AE81D2 /* EditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewModel.swift; sourceTree = "<group>"; };
+		389D489D2BCB059800AE81D2 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		389D489F2BCB805B00AE81D2 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		38D590322BCB941A0004F33B /* CustomRotationGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRotationGestureRecognizer.swift; sourceTree = "<group>"; };
 		38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utility.swift"; sourceTree = "<group>"; };
 		38D7E9752BC07D64004990E3 /* UIImage+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Utility.swift"; sourceTree = "<group>"; };
 		38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTintedButton.swift; sourceTree = "<group>"; };
@@ -130,6 +140,7 @@
 				38224AED2BA4F6B4008D1D32 /* SceneDelegate.swift */,
 				38224AEB2BA4F6B4008D1D32 /* AppDelegate.swift */,
 				38224B442BA51E12008D1D32 /* MainViewModel.swift */,
+				389D489B2BCA527A00AE81D2 /* EditViewModel.swift */,
 				38224AF12BA4F6B4008D1D32 /* Main.storyboard */,
 				38224AF62BA4F6B5008D1D32 /* LaunchScreen.storyboard */,
 				38224AF42BA4F6B5008D1D32 /* Assets.xcassets */,
@@ -162,6 +173,8 @@
 				38D7E9742BC07D64004990E3 /* UIImageView+Utility.swift */,
 				38D7E97A2BC080E3004990E3 /* CustomTintedButton.swift */,
 				38D7E9822BC45910004990E3 /* MostRecentArray.swift */,
+				389D489D2BCB059800AE81D2 /* UIViewController+Extensions.swift */,
+				389D489F2BCB805B00AE81D2 /* Math.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -181,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				38224AEF2BA4F6B4008D1D32 /* MainViewController.swift */,
+				389D48992BC9A26C00AE81D2 /* EditViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -191,6 +205,7 @@
 				38D7E97E2BC0D572004990E3 /* ImageProcessor.swift */,
 				38D7E9802BC27479004990E3 /* BackgroundImagesDataSource.swift */,
 				389D48972BC862EE00AE81D2 /* LoadingIndicator.swift */,
+				38D590322BCB941A0004F33B /* CustomRotationGestureRecognizer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -326,17 +341,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38D590332BCB941A0004F33B /* CustomRotationGestureRecognizer.swift in Sources */,
 				38224B452BA51E12008D1D32 /* MainViewModel.swift in Sources */,
 				38224B1C2BA4F7EE008D1D32 /* DraggableZoomableImageView.swift in Sources */,
 				38D7E9812BC27479004990E3 /* BackgroundImagesDataSource.swift in Sources */,
 				38224AF02BA4F6B4008D1D32 /* MainViewController.swift in Sources */,
+				389D489E2BCB059800AE81D2 /* UIViewController+Extensions.swift in Sources */,
 				384462F32BAA3EA0000C9DB1 /* CheckerboardView.swift in Sources */,
 				38D7E97F2BC0D572004990E3 /* ImageProcessor.swift in Sources */,
 				385EC8372BB4E79E00922423 /* BackgroundCollectionViewCell.swift in Sources */,
 				38D7E97B2BC080E3004990E3 /* CustomTintedButton.swift in Sources */,
+				389D489A2BC9A26C00AE81D2 /* EditViewController.swift in Sources */,
+				389D489C2BCA527A00AE81D2 /* EditViewModel.swift in Sources */,
 				385EC83C2BBB890900922423 /* MaskingView.swift in Sources */,
 				38D7E9772BC07D64004990E3 /* UIImage+Utility.swift in Sources */,
 				38224AEC2BA4F6B4008D1D32 /* AppDelegate.swift in Sources */,
+				389D48A02BCB805B00AE81D2 /* Math.swift in Sources */,
 				38224AEE2BA4F6B4008D1D32 /* SceneDelegate.swift in Sources */,
 				389D48982BC862EE00AE81D2 /* LoadingIndicator.swift in Sources */,
 				38D7E9832BC45910004990E3 /* MostRecentArray.swift in Sources */,

@@ -13,6 +13,7 @@ class DraggableZoomableImageView: UIImageView {
     private var lastScale: CGFloat = 1.0
     private var originalCenter: CGPoint = CGPoint()
     private let minScale: CGFloat = 0.5  // Minimum scale limit
+    private var currentRotation: CGFloat = 0
 
     // Erase more
     private var lastPoint: CGPoint = .zero
@@ -52,12 +53,16 @@ class DraggableZoomableImageView: UIImageView {
         panGesture.minimumNumberOfTouches = 2
         panGesture.maximumNumberOfTouches = 2
         panGesture.delegate = self
-
         self.addGestureRecognizer(panGesture)
         
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
         pinchGesture.delegate = self
         self.addGestureRecognizer(pinchGesture)
+        
+//        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(_:)))
+//        rotationGesture.delegate = self
+//        self.addGestureRecognizer(rotationGesture)
+        
     }
 
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -84,11 +89,18 @@ class DraggableZoomableImageView: UIImageView {
         }
     }
     
+    @objc private func handleRotation(_ gesture: UIRotationGestureRecognizer) {
+        
+        if gesture.state == .began || gesture.state == .changed {
+            self.transform = self.transform.rotated(by: gesture.rotation)
+            gesture.rotation = 0
+        }
+    }
 }
 
 extension DraggableZoomableImageView: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true  
+        return false
     }
 }
 
@@ -125,5 +137,4 @@ extension DraggableZoomableImageView {
         maskView2.layer.contents = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     }
-
 }

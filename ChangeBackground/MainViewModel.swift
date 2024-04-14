@@ -16,7 +16,6 @@ class MainViewModel {
     @Published var foregroundImage: UIImage?
     
     
-    var undoForegroundImageStack = MostRecentArray<UIImage>(maxSize: 10)
     var imageDidChange: ((UIImage?) -> Void)?
     var shareImage: ((UIImage?) -> Void)?
 
@@ -37,22 +36,8 @@ class MainViewModel {
                 }
                 let uiImage = UIImage(cgImage: foregroundCGImage)
                 self.foregroundImage = uiImage
-                foregroundImageDidChange(uiImage)
             })
         }
-    }
-    
-    func foregroundImageDidChange(_ newImage: UIImage) {
-        self.foregroundImage = newImage
-        self.undoForegroundImageStack.add(newImage)
-    }
-    
-    func undoForegroundImageEdit() {
-        guard undoForegroundImageStack.count() > 1 else {
-            return
-        }
-        _ = self.undoForegroundImageStack.removeLast()
-        self.foregroundImage = self.undoForegroundImageStack.last()
     }
 }
 
@@ -75,8 +60,11 @@ extension MainViewModel {
             for subview in commonSuperview.subviews {
                 if let imageView = subview as? UIImageView {
                     context.cgContext.saveGState()
-                    context.cgContext.translateBy(x: imageView.frame.origin.x, y: imageView.frame.origin.y)
+                    
+                    context.cgContext.translateBy(x: imageView.center.x, y: imageView.center.y)
                     context.cgContext.concatenate(imageView.transform)
+                    context.cgContext.translateBy(x: -imageView.bounds.size.width / 2, y: -imageView.bounds.size.height / 2)
+
                     imageView.layer.render(in: context.cgContext)
                     context.cgContext.restoreGState()
                 }

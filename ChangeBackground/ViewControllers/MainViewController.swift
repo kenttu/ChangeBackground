@@ -17,10 +17,7 @@ class MainViewController: UIViewController {
     @IBOutlet var subjectButton: UIButton!
     @IBOutlet var backgroundCollectionView: UICollectionView!
     @IBOutlet var backgroundControlView: UIView!
-    @IBOutlet var subjectControlView: UIView!
-    @IBOutlet var undoEditButton: UIButton!
     
-    private var eraseMaskView: MaskingView?
     private var viewModel = MainViewModel()
     private var cancellable: Set<AnyCancellable> = []
     private var backgroundImagesDataSource: BackgroundImagesDataSource?
@@ -64,24 +61,12 @@ class MainViewController: UIViewController {
     }
         
     @IBAction func shareButtonTapped(_ sender: UIButton) {
+        LoadingIndicator.shared.show(over: self.view)
         viewModel.handleShareButtonTapped(self.subjectImageView.superview!)
     }
-    
-    @IBAction func rotateSubjectImage(_ sender: UIButton) {
-        subjectImageView.image = subjectImageView.image?.rotated(by: 90)
         
-    }
-    
-    @IBAction func editSwitchChanged(_ sender: UISwitch) {        
-        if sender.isOn {
-            enableEraseMaskView()
-        } else {
-            disableEraseMaskView()
-        }
-    }
-    
-    @IBAction func undoEditSubjectImage(_ sender: UIButton) {
-        viewModel.undoForegroundImageEdit()
+    @IBAction func editButtonTapped(_ sender: UIButton) {
+        self.presentEditViewController()
     }
 }
 
@@ -102,7 +87,6 @@ extension MainViewController {
         }
         
         backgroundControlView.isHidden = !backgroundButton.isSelected
-        subjectControlView.isHidden = !subjectButton.isSelected
     }
     
     func setupControlViews() {
@@ -121,6 +105,20 @@ extension MainViewController {
         
         if let layout = backgroundCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
+        }
+    }
+    
+    func presentEditViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        if let editViewController = storyboard.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
+            editViewController.modalPresentationStyle = .fullScreen 
+            editViewController.modalTransitionStyle = .coverVertical
+            editViewController.mainViewModel = viewModel
+
+            self.present(editViewController, animated: true, completion: nil)
+        } else {
+            print("Failed to instantiate EditViewController from storyboard.")
         }
     }
 }
@@ -165,30 +163,9 @@ extension MainViewController {
         }
         
         // Present the activity view controller
-        self.present(activityViewController, animated: true, completion: nil)
-    }
-}
-
-extension MainViewController {
-    private func enableEraseMaskView() {
-        eraseMaskView = MaskingView(imageView: self.subjectImageView)
-        guard let eraseMaskView else { return }
-        eraseMaskView.isUserInteractionEnabled = true
-        eraseMaskView.didUpdate = { [weak self] newImage in
-            guard let self else {
-                return
-            }
-            self.viewModel.foregroundImageDidChange(newImage)
+        self.present(activityViewController, animated: true) {
+            LoadingIndicator.shared.hide()
         }
-        backgroundImageView.isHidden = true
-        undoEditButton.isHidden = false
-        subjectImageView.addSubview(eraseMaskView)
-    }
-
-    private func disableEraseMaskView() {
-        backgroundImageView.isHidden = false
-        undoEditButton.isHidden = true
-        eraseMaskView?.removeFromSuperview()
-        eraseMaskView = nil
     }
 }
+
