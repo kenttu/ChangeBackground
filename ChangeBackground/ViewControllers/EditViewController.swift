@@ -10,6 +10,7 @@ import UIKit
 import Combine
 
 class EditViewController: UIViewController {
+    @IBOutlet var imageContainerView: CheckerboardView!
     @IBOutlet var subjectImageView: DraggableZoomableImageView!
     var mainViewModel: MainViewModel?
     
@@ -26,7 +27,13 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func rotateSubjectImage(_ sender: UIButton) {
-        subjectImageView.image = subjectImageView.image?.rotated(by: 90)
+        guard let image = subjectImageView.image, let rotatedImage = image.rotated(by: 90) else {
+            return
+        }
+        
+        subjectImageView.image = rotatedImage
+        viewModel.foregroundImageDidChange(rotatedImage)
+
     }
     
     @IBAction func undoEditSubjectImage(_ sender: UIButton) {

@@ -11,6 +11,7 @@ import Combine
 import Photos
 
 class MainViewController: UIViewController {
+    @IBOutlet var imageContainerView: CheckerboardView!
     @IBOutlet var backgroundImageView: DraggableZoomableImageView!
     @IBOutlet var subjectImageView: DraggableZoomableImageView!
     @IBOutlet var backgroundButton: UIButton!
@@ -21,7 +22,8 @@ class MainViewController: UIViewController {
     private var viewModel = MainViewModel()
     private var cancellable: Set<AnyCancellable> = []
     private var backgroundImagesDataSource: BackgroundImagesDataSource?
-    
+    private var transitionManager = TransitionManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupControlViews()
@@ -93,7 +95,7 @@ extension MainViewController {
         self.selectControlViews(.backgroundControlView)
         self.subjectImageView.isHidden = true
         self.subjectImageView.contentMode = .scaleAspectFit
-        self.backgroundImageView.contentMode = .scaleToFill
+        self.backgroundImageView.contentMode = .scaleAspectFill
     }
 }
 
@@ -111,15 +113,19 @@ extension MainViewController {
     func presentEditViewController() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        if let editViewController = storyboard.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController {
-            editViewController.modalPresentationStyle = .fullScreen 
-            editViewController.modalTransitionStyle = .coverVertical
-            editViewController.mainViewModel = viewModel
-
-            self.present(editViewController, animated: true, completion: nil)
-        } else {
-            print("Failed to instantiate EditViewController from storyboard.")
+        guard let editViewController = storyboard.instantiateViewController(withIdentifier: "EditViewController") as? EditViewController else {
+            return
         }
+        editViewController.mainViewModel = viewModel
+        
+        guard let _ = editViewController.view,
+              let sourceView = self.imageContainerView,
+              let destinationView = editViewController.imageContainerView else {
+            return
+        }
+        
+        transitionManager.setupTransition(from: self, to: editViewController, usingSourceView: sourceView, andDestinationView: destinationView)
+
     }
 }
 
@@ -168,4 +174,3 @@ extension MainViewController {
         }
     }
 }
-

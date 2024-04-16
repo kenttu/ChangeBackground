@@ -35,7 +35,7 @@
                                 </items>
                             </navigationBar>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kG6-Ek-jsf" customClass="CheckerboardView" customModule="Photo_Canvas" customModuleProvider="target">
-                                <rect key="frame" x="10" y="113" width="373" height="373"/>
+                                <rect key="frame" x="10" y="128" width="373" height="373"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="buB-1b-KGs" customClass="DraggableZoomableImageView" customModule="Photo_Canvas" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="373" height="373"/>
@@ -111,22 +111,19 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxv-8q-rJB" userLabel="BackgroundControlView">
-                                <rect key="frame" x="0.0" y="486" width="393" height="256"/>
+                                <rect key="frame" x="0.0" y="501" width="393" height="241"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="VQm-Dv-oQU">
                                         <rect key="frame" x="20" y="20" width="353" height="80"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Muslin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYx-94-llX">
-                                                <rect key="frame" x="0.0" y="0.0" width="353" height="21"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="21" id="3QI-hA-ubp"/>
-                                                </constraints>
+                                                <rect key="frame" x="0.0" y="0.0" width="353" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iXL-ym-9r0">
-                                                <rect key="frame" x="0.0" y="21" width="353" height="59"/>
+                                                <rect key="frame" x="0.0" y="20" width="353" height="60"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="6wW-Up-fPO"/>
@@ -191,7 +188,7 @@
                             <constraint firstItem="FpL-ss-Ypr" firstAttribute="top" secondItem="bxv-8q-rJB" secondAttribute="bottom" id="JuI-nf-mMd"/>
                             <constraint firstItem="Eut-Ky-g3r" firstAttribute="centerX" secondItem="kG6-Ek-jsf" secondAttribute="centerX" id="TGg-2g-nqA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FpL-ss-Ypr" secondAttribute="trailing" id="Vo7-if-mkD"/>
-                            <constraint firstItem="kG6-Ek-jsf" firstAttribute="top" secondItem="Eut-Ky-g3r" secondAttribute="bottom" constant="10" id="alP-9Z-zzF"/>
+                            <constraint firstItem="kG6-Ek-jsf" firstAttribute="top" secondItem="Eut-Ky-g3r" secondAttribute="bottom" constant="25" id="alP-9Z-zzF"/>
                             <constraint firstItem="kG6-Ek-jsf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="hNa-Qs-YIL"/>
                             <constraint firstAttribute="bottom" secondItem="FpL-ss-Ypr" secondAttribute="bottom" constant="50" id="sqL-p3-mzj"/>
                             <constraint firstItem="Eut-Ky-g3r" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yiM-i6-hh6"/>
@@ -204,6 +201,7 @@
                         <outlet property="backgroundCollectionView" destination="iXL-ym-9r0" id="Snj-tk-dxt"/>
                         <outlet property="backgroundControlView" destination="bxv-8q-rJB" id="D4B-ri-Htc"/>
                         <outlet property="backgroundImageView" destination="buB-1b-KGs" id="mAu-da-CzJ"/>
+                        <outlet property="imageContainerView" destination="kG6-Ek-jsf" id="5Dw-L6-99U"/>
                         <outlet property="subjectButton" destination="WkJ-AJ-JgB" id="TuO-R4-mfL"/>
                         <outlet property="subjectImageView" destination="vMJ-zc-C1H" id="vOz-br-ZCP"/>
                     </connections>
@@ -323,6 +321,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="imageContainerView" destination="Pq0-II-F08" id="iaw-Eb-1IR"/>
                         <outlet property="subjectImageView" destination="FvL-DL-Vrc" id="WSa-6c-9A9"/>
                     </connections>
                 </viewController>
