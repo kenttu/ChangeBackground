@@ -18,6 +18,7 @@ class MainViewController: UIViewController {
     @IBOutlet var subjectButton: UIButton!
     @IBOutlet var backgroundCollectionView: UICollectionView!
     @IBOutlet var backgroundControlView: UIView!
+    @IBOutlet var blurSlider: UISlider!
     
     private var viewModel = MainViewModel()
     private var cancellable: Set<AnyCancellable> = []
@@ -41,17 +42,48 @@ class MainViewController: UIViewController {
                 }
             }
             .store(in: &cancellable)
-        
+
+        viewModel.$backgroundImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                if let image {
+                    self?.backgroundImageView.isHidden = false
+                    self?.backgroundImageView.image = image
+                }
+                else {
+                    self?.backgroundImageView.isHidden = true
+                    self?.backgroundImageView.image = nil
+                }
+                self?.blurSlider.value = 0
+            }
+            .store(in: &cancellable)
+
+        viewModel.$filteredBackgroundImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                if let image {
+                    self?.backgroundImageView.isHidden = false
+                    self?.backgroundImageView.image = image
+                }
+            }
+            .store(in: &cancellable)
+
         viewModel.shareImage = { [weak self] image in
             if let image {
                 self?.presentShareViewController(image)
             }
         }
     }
+    @IBAction func clearBackgroundButtonPressed() {
+        viewModel.backgroundImage = nil
+    }
+    
+    @IBAction func libraryButtonPressed() {
+        showImagePicker()
+    }
     
     @IBAction func backgroundButtonPressed() {
         self.selectControlViews(.backgroundControlView)
-        showImagePicker()
     }
     
     @IBAction func subjectButtonPressed() {
@@ -70,6 +102,12 @@ class MainViewController: UIViewController {
     @IBAction func editButtonTapped(_ sender: UIButton) {
         self.presentEditViewController()
     }
+    
+    @IBAction func blurSliderChanged(_ sender: UISlider) {
+        let currentValue = sender.value
+        viewModel.handleBlurSliderUpdate(currentValue: Double(currentValue))
+    }
+
 }
 
 extension MainViewController {
@@ -101,13 +139,22 @@ extension MainViewController {
 
 extension MainViewController {
     func setupBackgroundCollectionView() {
-        backgroundImagesDataSource = BackgroundImagesDataSource(imageView: self.backgroundImageView)
+        backgroundImagesDataSource = BackgroundImagesDataSource()
         backgroundCollectionView.dataSource = backgroundImagesDataSource
         backgroundCollectionView.delegate = backgroundImagesDataSource
         
         if let layout = backgroundCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .horizontal
         }
+        
+        backgroundImagesDataSource?.$backgroundImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                if let image {
+                    self?.viewModel.backgroundImage = image
+                }
+            }
+            .store(in: &cancellable)
     }
     
     func presentEditViewController() {
@@ -148,10 +195,10 @@ extension MainViewController: UIImagePickerControllerDelegate & UINavigationCont
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
         if backgroundButton.isSelected {
-            backgroundImageView.image = selectedImage
+            viewModel.backgroundImage = selectedImage
         }
         else {
-            viewModel.subjectImageSelected(selectedImage)
+            viewModel.subjectImageSelected(selectedImage.rotated(by: 0))
         }
         picker.dismiss(animated: true)
     }

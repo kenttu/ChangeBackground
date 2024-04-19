@@ -14,30 +14,35 @@ class MainViewModel {
     @Published var selectedImage: UIImage?
     @Published var isImagePickerDisplayed: Bool = false
     @Published var foregroundImage: UIImage?
+    @Published var backgroundImage: UIImage?
+    @Published var filteredBackgroundImage: UIImage?
     
     
     var imageDidChange: ((UIImage?) -> Void)?
     var shareImage: ((UIImage?) -> Void)?
 
     private var imageProcessor: ImageProcessor
+    private var imageFilterProcessor: ImageFilterProcessor
     private var cancellables: Set<AnyCancellable> = []
 
-    init(imageProcessor: ImageProcessor = ImageProcessor()) {
+    init(imageProcessor: ImageProcessor = ImageProcessor(), imageFilterProcessor: ImageFilterProcessor = ImageFilterProcessor()) {
         self.imageProcessor = imageProcessor
+        self.imageFilterProcessor = imageFilterProcessor
     }
 
     func subjectImageSelected(_ image: UIImage?) {
+        guard let image else {
+            return
+        }
+        
         foregroundImage = image
         
-        if let cgImage = image?.cgImage {
-            imageProcessor.getForegroundMaskedImage(cgImage: cgImage, completion: { [weak self] foregroundCGImage in
-                guard let foregroundCGImage, let self  else {
-                    return
-                }
-                let uiImage = UIImage(cgImage: foregroundCGImage)
-                self.foregroundImage = uiImage
-            })
-        }
+        imageProcessor.getForegroundMaskedImage(inputImage: image, completion: { [weak self] foregroundImage in
+            guard let image = foregroundImage else {
+                return
+            }
+            self?.foregroundImage = image
+        })
     }
 }
 
@@ -80,5 +85,12 @@ extension MainViewModel {
             }
         }
         return false
+    }
+    
+    func handleBlurSliderUpdate(currentValue: Double) {
+        guard let backgroundImage else {
+            return
+        }
+        self.filteredBackgroundImage = imageFilterProcessor.applyGaussianBlur(to: backgroundImage, withRadius: currentValue)
     }
 }

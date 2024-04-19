@@ -24,8 +24,7 @@ class ImageFilterProcessor {
         blurFilter.setValue(radius, forKey: kCIInputRadiusKey)
         
         guard let outputCIImage = blurFilter.outputImage,
-              let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return nil }
-        
+              let outputCGImage = context.createCGImage(outputCIImage, from: ciImage.extent) else { return nil }
         return UIImage(cgImage: outputCGImage)
     }
 

@@ -6,14 +6,11 @@
 //
 
 import UIKit
+import Combine
 
 class BackgroundImagesDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     private let backgroundImages = ["background-1", "background-2", "background-3", "background-4", "background-5", "background-5", "background-6"]
-    private var backgroundImageView: UIImageView
-
-    init(imageView: UIImageView) {
-        self.backgroundImageView = imageView
-    }
+    @Published var backgroundImage: UIImage?
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return backgroundImages.count
@@ -28,7 +25,7 @@ class BackgroundImagesDataSource: NSObject, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let imageName = backgroundImages[indexPath.item]
-        backgroundImageView.image = UIImage(named: imageName)
+        backgroundImage = UIImage(named: imageName)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

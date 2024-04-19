@@ -9,7 +9,12 @@ import Vision
 import CoreML
 
 class ImageProcessor {
-    func getForegroundMaskedImage(cgImage: CGImage, completion: @escaping (CGImage?) -> Void) {
+    func getForegroundMaskedImage(inputImage: UIImage, completion: @escaping (UIImage?) -> Void) {
+        guard let cgImage = inputImage.cgImage else {
+            completion(nil)
+            return
+        }
+        
         let requestHandler = VNImageRequestHandler(cgImage: cgImage, options: [:])
         let segmentationRequest = VNGenerateForegroundInstanceMaskRequest()
 
@@ -39,11 +44,12 @@ class ImageProcessor {
 
         let ciContext = CIContext()
         let mask = CIImage(cvPixelBuffer: pixelBuffer)
-        guard let maskCGImage = ciContext.createCGImage(mask, from: mask.extent) else {
+        guard let outputCGImage = ciContext.createCGImage(mask, from: mask.extent) else {
             print("maskCGImage failed")
             completion(nil)
             return
         }
-        completion(maskCGImage)
+        
+        completion(UIImage(cgImage: outputCGImage))
     }
 }
